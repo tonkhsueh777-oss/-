@@ -3,347 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大橘大利 | 文創年貨市集</title>
+    <title>紅薏米 | 文化創意定制</title>
     <style>
-        /* --- 1. 定義設計系統 (Design System) --- */
+        /* --- 設計系統 (Design System) --- */
         :root {
-            --bg-color: #F9F4EF; /* 溫暖米色背景 */
-            --primary-color: #E65100; /* 柿子橘 */
-            --accent-color: #BF360C; /* 深硃砂紅 */
-            --text-dark: #3E2723; /* 深褐文字，比純黑更有質感 */
-            --font-main: "Helvetica Neue", Arial, sans-serif;
-            --font-serif: "Times New Roman", serif; /* 標題用襯線體 */
-            --card-shadow: 0 10px 30px rgba(230, 81, 0, 0.1);
-            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --bg-color: #F2F0EB; /* 宣紙質感灰白 */
+            --primary-red: #682E28; /* 圖片中的殷紅色 */
+            --text-color: #2C2C2C;
+            --accent-gold: #C5A065; /* 點綴用金色 */
+            --font-serif: "Noto Serif TC", "Songti TC", serif; /* 宋體 */
+            --font-sans: "Helvetica Neue", sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-dark);
-            font-family: var(--font-main);
+            color: var(--text-color);
+            font-family: var(--font-sans);
             margin: 0;
             padding: 0;
-            overflow-x: hidden; /* 防止橫向滾動條 */
+            overflow-x: hidden;
         }
 
-        /* --- 2. 導航欄 (Glassmorphism 效果) --- */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 1.5rem 3rem;
-            box-sizing: border-box;
-            z-index: 100;
-            background: rgba(249, 244, 239, 0.8);
-            backdrop-filter: blur(10px); /* 毛玻璃特效 */
-            transition: var(--transition-smooth);
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            color: var(--primary-red);
         }
 
-        nav .logo {
-            font-weight: bold;
-            font-size: 1.5rem;
-            color: var(--accent-color);
-            letter-spacing: 2px;
-        }
-
-        /* --- 3. Hero Section (主視覺動態) --- */
-        .hero {
-            height: 100vh;
+        /* --- 1. Hero 品牌主視覺 --- */
+        .hero-section {
+            height: 90vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             text-align: center;
+            border-bottom: 1px solid var(--primary-red);
             position: relative;
-            overflow: hidden;
         }
 
-        .hero h1 {
-            font-family: var(--font-serif);
+        .hero-title {
             font-size: 5rem;
             margin: 0;
-            color: var(--accent-color);
+            letter-spacing: 10px;
             opacity: 0;
-            transform: translateY(50px);
-            animation: slideUpFade 1s forwards 0.5s; /* 進場動畫 */
+            animation: fadeIn Up 1.2s forwards;
         }
 
-        .hero p {
-            font-size: 1.2rem;
+        .hero-subtitle {
+            font-size: 1.5rem;
             margin-top: 20px;
+            font-weight: 300;
             opacity: 0;
-            animation: slideUpFade 1s forwards 0.8s;
+            animation: fadeInUp 1.2s forwards 0.5s;
         }
 
-        .cta-btn {
+        .contact-info {
             margin-top: 40px;
-            padding: 15px 40px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: var(--transition-smooth);
+            padding: 10px 30px;
+            border: 1px solid var(--primary-red);
+            color: var(--primary-red);
+            font-family: var(--font-serif);
+            letter-spacing: 2px;
             opacity: 0;
-            animation: slideUpFade 1s forwards 1.1s;
+            animation: fadeInUp 1.2s forwards 0.8s;
         }
 
-        .cta-btn:hover {
+        /* --- 2. 方言 T-shirt 文字牆 (高互動區) --- */
+        .dialect-wall {
+            padding: 5rem 5%;
+            background: var(--primary-red);
+            color: #fff;
+        }
+
+        .wall-title {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .tshirt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .dialect-card {
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .dialect-card:hover {
+            background: #fff;
+            color: var(--primary-red);
             transform: scale(1.05);
-            background: var(--accent-color);
-            box-shadow: 0 10px 20px rgba(191, 54, 12, 0.3);
+            z-index: 10;
         }
 
-        /* 漂浮裝飾動畫 */
-        .decoration-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%);
-            opacity: 0.5;
-            z-index: -1;
-            animation: float 6s ease-in-out infinite;
+        .dialect-word {
+            font-size: 2rem;
+            font-weight: bold;
+            font-family: var(--font-serif);
+            margin-bottom: 10px;
         }
 
-        /* --- 4. 產品卡片 (懸停交互) --- */
-        section {
+        .dialect-meaning {
+            font-size: 0.9rem;
+            opacity: 0; /* 預設隱藏 */
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .dialect-card:hover .dialect-meaning {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- 3. 情感系列 (圖文交錯) --- */
+        .story-section {
             padding: 5rem 10%;
         }
 
-        .section-title {
-            text-align: center;
-            font-family: var(--font-serif);
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        /* 標題下方的裝飾線 */
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: var(--primary-color);
-            margin: 10px auto 0;
-            transition: width 0.3s ease;
-        }
-        
-        .section-title:hover::after {
-            width: 100px; /* 互動：標題下劃線變長 */
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            transition: var(--transition-smooth);
-            cursor: pointer;
-            /* 初始狀態：隱藏，給 JS 控制 */
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .card:hover {
-            transform: translateY(-10px); /* 懸停上浮 */
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .card-img {
-            width: 100%;
-            height: 300px;
-            background-color: #eee;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* 圖片縮放效果 */
-        .card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
-        .card:hover .card-img img {
-            transform: scale(1.1); /* 圖片內部放大 */
-        }
-
-        .card-info {
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* --- 5. 特殊展示區 (破格排版) --- */
-        .feature-split {
+        .story-item {
             display: flex;
             align-items: center;
+            margin-bottom: 100px;
             gap: 50px;
-            margin: 100px 0;
         }
 
-        .feature-text {
-            flex: 1;
+        .story-item:nth-child(even) {
+            flex-direction: row-reverse; /* 左右交錯 */
         }
 
-        .feature-img-box {
+        .story-img-box {
             flex: 1;
+            overflow: hidden;
             position: relative;
         }
         
-        /* 圖片後的裝飾框 */
-        .feature-img-box::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            right: -20px;
+        .story-img-box img {
             width: 100%;
-            height: 100%;
-            border: 2px solid var(--primary-color);
-            z-index: -1;
-            transition: var(--transition-smooth);
-        }
-        
-        .feature-split:hover .feature-img-box::before {
-            top: 10px;
-            right: 10px; /* 互動：框線錯位移動 */
+            display: block;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .feature-img-box img {
-            width: 100%;
-            border-radius: 10px;
+        .story-item:hover .story-img-box img {
+            transform: scale(1.05);
+        }
+
+        .story-content {
+            flex: 1;
+        }
+
+        .story-tag {
+            font-size: 0.9rem;
+            color: var(--primary-red);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
             display: block;
         }
 
-        /* --- 動畫定義 --- */
-        @keyframes slideUpFade {
-            to { opacity: 1; transform: translateY(0); }
+        .product-list li {
+            margin-bottom: 8px;
+            list-style: none;
+            position: relative;
+            padding-left: 15px;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        .product-list li::before {
+            content: "•";
+            color: var(--primary-red);
+            position: absolute;
+            left: 0;
         }
-        
-        /* JS 會加這個 class 來觸發動畫 */
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+
+        /* --- 動畫 --- */
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
         }
 
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">HGG ANIMATION</div>
-        <div>購物車</div>
-    </nav>
+    <section class="hero-section">
+        <h1 class="hero-title">紅薏米</h1>
+        <div class="hero-subtitle">文創產品 · 銷售 / 定制</div>
+        <div class="contact-info">TEL: 135-17234133</div>
+    </section>
 
-    <div class="hero">
-        <div class="decoration-circle" style="width: 300px; height: 300px; top: 10%; left: 10%;"></div>
-        <div class="decoration-circle" style="width: 150px; height: 150px; bottom: 20%; right: 15%; animation-delay: 1s;"></div>
-        
-        <h1>大橘大利<br>年貨市集</h1>
-        <p>嚴選農產 · 文創設計 · 好運周邊</p>
-        <button class="cta-btn">立即逛逛</button>
-    </div>
-
-    <section>
-        <h2 class="section-title">熱門選物</h2>
-        <div class="grid-container">
-            <div class="card reveal">
-                <div class="card-img">
-                    <img src="https://images.unsplash.com/photo-1585849834997-64fb94f17f41?auto=format&fit=crop&w=600&q=80" alt="文創商品">
-                </div>
-                <div class="card-info">
-                    <h3>虎年限定插畫</h3>
-                    <p>NT$ 580</p>
-                </div>
+    <section class="dialect-wall">
+        <div style="text-align: center;">
+            <h2 class="wall-title">武漢方言系列 T恤</h2>
+        </div>
+        <div class="tshirt-grid">
+            <div class="dialect-card">
+                <div class="dialect-word">吧唧</div>
+                <div class="dialect-meaning">Ba Ji<br>(T-shirt 款式)</div>
             </div>
-            <div class="card reveal" style="transition-delay: 0.1s;">
-                <div class="card-img">
-                    <img src="https://images.unsplash.com/photo-1563203369-26f2e4a5ccf7?auto=format&fit=crop&w=600&q=80" alt="農特產">
-                </div>
-                <div class="card-info">
-                    <h3>黃金甜玉米禮盒</h3>
-                    <p>NT$ 880</p>
-                </div>
+            <div class="dialect-card">
+                <div class="dialect-word">蒜鳥</div>
+                <div class="dialect-meaning">Suan Wu<br>(算了/罷了)</div>
             </div>
-            <div class="card reveal" style="transition-delay: 0.2s;">
-                <div class="card-img">
-                    <img src="https://images.unsplash.com/photo-1606103836293-c819d688d185?auto=format&fit=crop&w=600&q=80" alt="紅包袋">
-                </div>
-                <div class="card-info">
-                    <h3>質感燙金紅包</h3>
-                    <p>NT$ 120</p>
-                </div>
+            <div class="dialect-card">
+                <div class="dialect-word">虛狐</div>
+                <div class="dialect-meaning">Xu Hu<br>(裝模作樣)</div>
+            </div>
+            <div class="dialect-card">
+                <div class="dialect-word">裹鯨</div>
+                <div class="dialect-meaning">Guo Jing<br>(T-shirt 款式)</div>
+            </div>
+            <div class="dialect-card">
+                <div class="dialect-word">搞磨獅</div>
+                <div class="dialect-meaning">Gao Mo Shi<br>(做什麼/忙什麼)</div>
+            </div>
+            <div class="dialect-card">
+                <div class="dialect-word">撮蝦子</div>
+                <div class="dialect-meaning">Cuo Xia Zi<br>(吃小龍蝦)</div>
+            </div>
+            <div class="dialect-card">
+                <div class="dialect-word">尖板眼</div>
+                <div class="dialect-meaning">Jian Ban Yan<br>(稀奇古怪)</div>
+            </div>
+            <div class="dialect-card">
+                <div class="dialect-word">信了你的邪</div>
+                <div class="dialect-meaning">Xin Le Ni Di Xie<br>(服了你了)</div>
             </div>
         </div>
     </section>
 
-    <section>
-        <div class="feature-split reveal">
-            <div class="feature-text">
-                <h2>產地直送，新鮮上桌</h2>
-                <p>我們精選最優質的農特產品，從產地直接送到您的餐桌。每一口都是陽光與土地的味道。</p>
-                <button class="cta-btn" style="margin-top: 20px; animation: none; opacity: 1;">查看詳情</button>
+    <section class="story-section">
+        
+        <div class="story-item">
+            <div class="story-img-box">
+                <img src="path_to_bag_image.jpg" alt="回家的路帆布袋">
             </div>
-            <div class="feature-img-box">
-                <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80" alt="新鮮玉米">
+            <div class="story-content">
+                <span class="story-tag">帆布袋 / 冰箱貼 / 折扇</span>
+                <h2>每一條路，都是回家的路</h2>
+                <p>將城市的經緯與鄉愁，編織進日常的隨身物件中。</p>
+                <ul class="product-list">
+                    <li>「每一條路都是回家的路」帆布袋</li>
+                    <li>「每一條路都是回家的路」冰箱貼</li>
+                    <li>「台北路的盡頭是解放大道」帆布袋</li>
+                </ul>
             </div>
         </div>
+
+        <div class="story-item">
+            <div class="story-img-box">
+                <img src="path_to_game_image.jpg" alt="火燒赤壁桌遊">
+            </div>
+            <div class="story-content">
+                <span class="story-tag">桌遊 / 歷史折扇</span>
+                <h2>歷史的迴響</h2>
+                <p>從三國赤壁的烽火，到嘉慶君遊台灣的傳說，在遊戲與搖扇間品味歷史。</p>
+                <ul class="product-list">
+                    <li>「火燒赤壁」桌遊紙牌</li>
+                    <li>「嘉慶君遊台灣」折扇</li>
+                    <li>「琴台遇知音」折扇</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="story-item">
+            <div class="story-img-box">
+                <img src="path_to_decor_image.jpg" alt="金蟾招財">
+            </div>
+            <div class="story-content">
+                <span class="story-tag">香氛 / 擺件 / 絲巾</span>
+                <h2>雅緻生活，招財納福</h2>
+                <p>結合傳統寓意與現代美學，點亮生活的角落。</p>
+                <ul class="product-list">
+                    <li>台灣文旦柚香薰蠟燭</li>
+                    <li>金蟾招財擺件 / 抱枕</li>
+                    <li>漢劇漢韻絲巾</li>
+                    <li>台灣光復紀念日冰箱貼</li>
+                </ul>
+            </div>
+        </div>
+
     </section>
-
-    <script>
-        // --- 互動腳本：Scroll Reveal (滾動出現效果) ---
-        
-        // 1. 設定觀察器
-        const observerOptions = {
-            root: null, // 視窗
-            rootMargin: '0px',
-            threshold: 0.1 // 元素出現 10% 後觸發
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // 當元素進入畫面，加上 'active' class
-                    entry.target.classList.add('active');
-                    // (選擇性) 如果只想觸發一次，可以加上 observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // 2. 綁定所有帶有 .reveal class 的元素
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
-
-        // 3. 導航欄滾動變色效果
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.style.background = "rgba(255, 255, 255, 0.95)";
-                nav.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
-            } else {
-                nav.style.background = "rgba(249, 244, 239, 0.8)";
-                nav.style.boxShadow = "none";
-            }
-        });
-    </script>
 
 </body>
 </html>
