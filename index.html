@@ -2,117 +2,348 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <title>年貨大街/文創市集 - 活動頁面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大橘大利 | 文創年貨市集</title>
+    <style>
+        /* --- 1. 定義設計系統 (Design System) --- */
+        :root {
+            --bg-color: #F9F4EF; /* 溫暖米色背景 */
+            --primary-color: #E65100; /* 柿子橘 */
+            --accent-color: #BF360C; /* 深硃砂紅 */
+            --text-dark: #3E2723; /* 深褐文字，比純黑更有質感 */
+            --font-main: "Helvetica Neue", Arial, sans-serif;
+            --font-serif: "Times New Roman", serif; /* 標題用襯線體 */
+            --card-shadow: 0 10px 30px rgba(230, 81, 0, 0.1);
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* 防止橫向滾動條 */
+        }
+
+        /* --- 2. 導航欄 (Glassmorphism 效果) --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem 3rem;
+            box-sizing: border-box;
+            z-index: 100;
+            background: rgba(249, 244, 239, 0.8);
+            backdrop-filter: blur(10px); /* 毛玻璃特效 */
+            transition: var(--transition-smooth);
+        }
+
+        nav .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            letter-spacing: 2px;
+        }
+
+        /* --- 3. Hero Section (主視覺動態) --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: 5rem;
+            margin: 0;
+            color: var(--accent-color);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideUpFade 1s forwards 0.5s; /* 進場動畫 */
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            opacity: 0;
+            animation: slideUpFade 1s forwards 0.8s;
+        }
+
+        .cta-btn {
+            margin-top: 40px;
+            padding: 15px 40px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            opacity: 0;
+            animation: slideUpFade 1s forwards 1.1s;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+            background: var(--accent-color);
+            box-shadow: 0 10px 20px rgba(191, 54, 12, 0.3);
+        }
+
+        /* 漂浮裝飾動畫 */
+        .decoration-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%);
+            opacity: 0.5;
+            z-index: -1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* --- 4. 產品卡片 (懸停交互) --- */
+        section {
+            padding: 5rem 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* 標題下方的裝飾線 */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 10px auto 0;
+            transition: width 0.3s ease;
+        }
+        
+        .section-title:hover::after {
+            width: 100px; /* 互動：標題下劃線變長 */
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            /* 初始狀態：隱藏，給 JS 控制 */
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .card:hover {
+            transform: translateY(-10px); /* 懸停上浮 */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 300px;
+            background-color: #eee;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 圖片縮放效果 */
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.1); /* 圖片內部放大 */
+        }
+
+        .card-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* --- 5. 特殊展示區 (破格排版) --- */
+        .feature-split {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin: 100px 0;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-img-box {
+            flex: 1;
+            position: relative;
+        }
+        
+        /* 圖片後的裝飾框 */
+        .feature-img-box::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--primary-color);
+            z-index: -1;
+            transition: var(--transition-smooth);
+        }
+        
+        .feature-split:hover .feature-img-box::before {
+            top: 10px;
+            right: 10px; /* 互動：框線錯位移動 */
+        }
+
+        .feature-img-box img {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+        }
+
+        /* --- 動畫定義 --- */
+        @keyframes slideUpFade {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* JS 會加這個 class 來觸發動畫 */
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
 </head>
 <body>
 
-    <header class="sticky-top">
-        <nav>
-            <div class="logo">品牌 Logo</div>
-            <ul class="menu">
-                <li>首頁</li>
-                <li>熱銷排行</li>
-                <li>農特產</li>
-                <li>文創周邊</li>
-            </ul>
-            <div class="cart-icon">購物車 (0)</div>
-        </nav>
-    </header>
+    <nav>
+        <div class="logo">HGG ANIMATION</div>
+        <div>購物車</div>
+    </nav>
 
-    <section id="hero-banner">
-        <img src="banner-main.jpg" alt="大橘大利 年貨市集">
-        <div class="cta-button">
-            <a href="#products">立即搶購</a>
-        </div>
-    </section>
-
-    <section id="categories">
-        <div class="grid-container">
-            <div class="cat-item"><img src="icon-1.png"><span>紅包袋</span></div>
-            <div class="cat-item"><img src="icon-2.png"><span>春聯</span></div>
-            <div class="cat-item"><img src="icon-3.png"><span>伴手禮</span></div>
-            <div class="cat-item"><img src="icon-4.png"><span>零食</span></div>
-            </div>
-    </section>
-
-    <section id="desk-decor">
-        <h2>新春辦公好運來</h2>
-        <div class="product-card">
-            <img src="prod-calendar.jpg" alt="桌曆與擺飾">
-            <h3>虎年限定桌曆</h3>
-            <p>NT$ 399</p>
-            <button>加入購物車</button>
-        </div>
-    </section>
-
-    <section id="fresh-corn">
-        <h2>產地直送：黃金甜玉米</h2>
-        <div class="highlight-image">
-            <img src="corn-hero.jpg" alt="新鮮玉米特寫">
-        </div>
-        <div class="gallery-row">
-            <img src="corn-detail-1.jpg" alt="玉米烹煮圖">
-            <img src="corn-detail-2.jpg" alt="玉米禮盒包裝">
-        </div>
-        <div class="buy-action">
-            <h3>有機甜玉米 (10入)</h3>
-            <button>立即購買</button>
-        </div>
-    </section>
-
-    <section id="party-games">
-        <h2>過年聚會必備</h2>
-        <div class="lifestyle-shot">
-            <img src="party-lifestyle.jpg" alt="大家一起玩遊戲">
-        </div>
-        <div class="product-grid">
-            <div class="prod"><img src="prod-cards.jpg"><span>造型撲克牌</span></div>
-            <div class="prod"><img src="prod-mahjong.jpg"><span>麻將周邊</span></div>
-        </div>
-    </section>
-
-    <section id="fashion">
-        <h2>風格穿搭與配件</h2>
+    <div class="hero">
+        <div class="decoration-circle" style="width: 300px; height: 300px; top: 10%; left: 10%;"></div>
+        <div class="decoration-circle" style="width: 150px; height: 150px; bottom: 20%; right: 15%; animation-delay: 1s;"></div>
         
-        <div class="sub-category">
-            <img src="prod-totebag.jpg" alt="插畫帆布袋">
-            <h3>原創插畫帆布袋</h3>
-        </div>
+        <h1>大橘大利<br>年貨市集</h1>
+        <p>嚴選農產 · 文創設計 · 好運周邊</p>
+        <button class="cta-btn">立即逛逛</button>
+    </div>
 
-        <div class="sub-category">
-            <img src="prod-fans.jpg" alt="造型折扇">
-            <h3>古風折扇系列</h3>
-        </div>
-    </section>
-
-    <section id="home-living">
-        <h2>居家質感選物</h2>
-        <div class="product-stack">
-            <img src="prod-red-envelope.jpg" alt="質感紅包袋">
-            <img src="prod-cushion.jpg" alt="造型抱枕">
-        </div>
-        <div class="model-shot">
-            <img src="model-blanket.jpg" alt="保暖披肩毛毯">
-        </div>
-    </section>
-
-    <section id="tshirt-collection">
-        <h2>限定 T-Shirt 系列</h2>
-        <div class="grid-3x3">
-            <img src="tshirt-01.jpg">
-            <img src="tshirt-02.jpg">
-            <img src="tshirt-03.jpg">
-            <img src="tshirt-04.jpg">
-            <img src="tshirt-05.jpg">
-            <img src="tshirt-06.jpg">
+    <section>
+        <h2 class="section-title">熱門選物</h2>
+        <div class="grid-container">
+            <div class="card reveal">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1585849834997-64fb94f17f41?auto=format&fit=crop&w=600&q=80" alt="文創商品">
+                </div>
+                <div class="card-info">
+                    <h3>虎年限定插畫</h3>
+                    <p>NT$ 580</p>
+                </div>
             </div>
+            <div class="card reveal" style="transition-delay: 0.1s;">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1563203369-26f2e4a5ccf7?auto=format&fit=crop&w=600&q=80" alt="農特產">
+                </div>
+                <div class="card-info">
+                    <h3>黃金甜玉米禮盒</h3>
+                    <p>NT$ 880</p>
+                </div>
+            </div>
+            <div class="card reveal" style="transition-delay: 0.2s;">
+                <div class="card-img">
+                    <img src="https://images.unsplash.com/photo-1606103836293-c819d688d185?auto=format&fit=crop&w=600&q=80" alt="紅包袋">
+                </div>
+                <div class="card-info">
+                    <h3>質感燙金紅包</h3>
+                    <p>NT$ 120</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <footer>
-        <div class="links">關於我們 | 運送政策 | 聯絡客服</div>
-        <div class="socials">IG / FB / Line</div>
-        <div class="copyright">© 2024 Your Brand</div>
-    </footer>
+    <section>
+        <div class="feature-split reveal">
+            <div class="feature-text">
+                <h2>產地直送，新鮮上桌</h2>
+                <p>我們精選最優質的農特產品，從產地直接送到您的餐桌。每一口都是陽光與土地的味道。</p>
+                <button class="cta-btn" style="margin-top: 20px; animation: none; opacity: 1;">查看詳情</button>
+            </div>
+            <div class="feature-img-box">
+                <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=800&q=80" alt="新鮮玉米">
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- 互動腳本：Scroll Reveal (滾動出現效果) ---
+        
+        // 1. 設定觀察器
+        const observerOptions = {
+            root: null, // 視窗
+            rootMargin: '0px',
+            threshold: 0.1 // 元素出現 10% 後觸發
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // 當元素進入畫面，加上 'active' class
+                    entry.target.classList.add('active');
+                    // (選擇性) 如果只想觸發一次，可以加上 observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // 2. 綁定所有帶有 .reveal class 的元素
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 3. 導航欄滾動變色效果
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = "rgba(255, 255, 255, 0.95)";
+                nav.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
+            } else {
+                nav.style.background = "rgba(249, 244, 239, 0.8)";
+                nav.style.boxShadow = "none";
+            }
+        });
+    </script>
 
 </body>
 </html>
