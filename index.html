@@ -3,294 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>紅薏米 | 文化創意定制</title>
+    <title>RED YIMI | 紅薏米實驗室</title>
     <style>
-        /* --- 設計系統 (Design System) --- */
+        /* --- 0. 基礎設定 --- */
         :root {
-            --bg-color: #F2F0EB; /* 宣紙質感灰白 */
-            --primary-red: #682E28; /* 圖片中的殷紅色 */
-            --text-color: #2C2C2C;
-            --accent-gold: #C5A065; /* 點綴用金色 */
-            --font-serif: "Noto Serif TC", "Songti TC", serif; /* 宋體 */
-            --font-sans: "Helvetica Neue", sans-serif;
+            --bg-color: #0a0a0a;
+            --text-main: #ffffff;
+            --brand-red: #ff3333; /* 霓虹紅 */
+            --brand-gray: #333;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-sans);
+            color: var(--text-main);
+            font-family: "Helvetica Neue", Arial, sans-serif;
             margin: 0;
-            padding: 0;
             overflow-x: hidden;
         }
 
-        h1, h2, h3 {
-            font-family: var(--font-serif);
-            color: var(--primary-red);
+        a { text-decoration: none; color: white; }
+
+        /* --- 1. 跑馬燈標題 (Marquee) --- */
+        .marquee-container {
+            background: var(--brand-red);
+            padding: 15px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            z-index: 100;
         }
 
-        /* --- 1. Hero 品牌主視覺 --- */
-        .hero-section {
-            height: 90vh;
+        .marquee-text {
+            display: inline-block;
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            animation: scroll 20s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- 2. Hero 區：巨大標題 --- */
+        .hero {
+            height: 80vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            border-bottom: 1px solid var(--primary-red);
             position: relative;
         }
 
-        .hero-title {
-            font-size: 5rem;
+        .hero h1 {
+            font-size: 12vw; /* 超大字體 */
+            line-height: 0.8;
             margin: 0;
-            letter-spacing: 10px;
-            opacity: 0;
-            animation: fadeIn Up 1.2s forwards;
+            text-transform: uppercase;
+            background: linear-gradient(to bottom, #fff, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 2;
         }
 
-        .hero-subtitle {
+        .hero-sub {
             font-size: 1.5rem;
+            color: var(--brand-red);
             margin-top: 20px;
-            font-weight: 300;
-            opacity: 0;
-            animation: fadeInUp 1.2s forwards 0.5s;
+            letter-spacing: 5px;
         }
 
-        .contact-info {
-            margin-top: 40px;
-            padding: 10px 30px;
-            border: 1px solid var(--primary-red);
-            color: var(--primary-red);
-            font-family: var(--font-serif);
-            letter-spacing: 2px;
-            opacity: 0;
-            animation: fadeInUp 1.2s forwards 0.8s;
+        /* 裝飾線條 */
+        .line {
+            width: 1px;
+            height: 100px;
+            background: var(--brand-red);
+            margin-top: 50px;
         }
 
-        /* --- 2. 方言 T-shirt 文字牆 (高互動區) --- */
-        .dialect-wall {
-            padding: 5rem 5%;
-            background: var(--primary-red);
-            color: #fff;
+        /* --- 3. 橫向捲動展示區 (Horizontal Scroll) --- */
+        .section-title {
+            font-size: 4rem;
+            padding: 0 5%;
+            margin-top: 100px;
+            border-left: 10px solid var(--brand-red);
+            line-height: 1;
         }
 
-        .wall-title {
-            text-align: center;
-            color: #fff;
-            margin-bottom: 3rem;
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            display: inline-block;
-            padding-bottom: 10px;
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 40px;
+            padding: 50px 5%;
+            scrollbar-width: none; /* 隱藏滾動條 */
         }
+        
+        .scroll-container::-webkit-scrollbar { display: none; }
 
-        .tshirt-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .dialect-card {
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 40px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.4s ease;
+        .product-card {
+            min-width: 300px;
             position: relative;
-            background: rgba(255,255,255,0.05);
+            transition: transform 0.3s ease;
         }
 
-        .dialect-card:hover {
-            background: #fff;
-            color: var(--primary-red);
-            transform: scale(1.05);
-            z-index: 10;
+        .product-card:hover {
+            transform: scale(1.02);
         }
 
-        .dialect-word {
+        .img-box {
+            width: 100%;
+            height: 400px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #333;
+        }
+
+        .img-box img {
+            width: 90%;
+            filter: grayscale(100%); /* 預設黑白 */
+            transition: filter 0.3s;
+        }
+
+        .product-card:hover .img-box img {
+            filter: grayscale(0%); /* 懸停變彩色 */
+        }
+
+        .p-name {
             font-size: 2rem;
+            font-weight: 900;
+            margin-top: 15px;
+            color: transparent;
+            -webkit-text-stroke: 1px white; /* 鏤空字體 */
+        }
+
+        .product-card:hover .p-name {
+            color: var(--brand-red);
+            -webkit-text-stroke: 0px;
+        }
+
+        /* --- 4. 方言衝擊區 (Grid) --- */
+        .dialect-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            border-top: 1px solid #333;
+        }
+
+        .dialect-item {
+            border-right: 1px solid #333;
+            border-bottom: 1px solid #333;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            font-size: 3rem;
             font-weight: bold;
-            font-family: var(--font-serif);
-            margin-bottom: 10px;
+            cursor: pointer;
         }
 
-        .dialect-meaning {
-            font-size: 0.9rem;
-            opacity: 0; /* 預設隱藏 */
-            transform: translateY(10px);
-            transition: all 0.3s ease;
+        .dialect-item span {
+            z-index: 2;
         }
 
-        .dialect-card:hover .dialect-meaning {
-            opacity: 1;
+        /* 滑鼠滑過背景變紅 */
+        .dialect-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--brand-red);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 1;
+        }
+
+        .dialect-item:hover::before {
             transform: translateY(0);
         }
 
-        /* --- 3. 情感系列 (圖文交錯) --- */
-        .story-section {
-            padding: 5rem 10%;
+        /* --- 5. 聯絡區 --- */
+        footer {
+            padding: 100px 5%;
+            text-align: center;
+            border-top: 1px solid #333;
         }
 
-        .story-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 100px;
-            gap: 50px;
-        }
-
-        .story-item:nth-child(even) {
-            flex-direction: row-reverse; /* 左右交錯 */
-        }
-
-        .story-img-box {
-            flex: 1;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .story-img-box img {
-            width: 100%;
-            display: block;
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .story-item:hover .story-img-box img {
-            transform: scale(1.05);
-        }
-
-        .story-content {
-            flex: 1;
-        }
-
-        .story-tag {
-            font-size: 0.9rem;
-            color: var(--primary-red);
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .product-list li {
-            margin-bottom: 8px;
-            list-style: none;
-            position: relative;
-            padding-left: 15px;
-        }
-
-        .product-list li::before {
-            content: "•";
-            color: var(--primary-red);
-            position: absolute;
-            left: 0;
-        }
-
-        /* --- 動畫 --- */
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
+        .big-contact {
+            font-size: 5vw;
+            font-weight: bold;
+            color: var(--brand-red);
         }
 
     </style>
 </head>
 <body>
 
-    <section class="hero-section">
-        <h1 class="hero-title">紅薏米</h1>
-        <div class="hero-subtitle">文創產品 · 銷售 / 定制</div>
-        <div class="contact-info">TEL: 135-17234133</div>
+    <div class="marquee-container">
+        <div class="marquee-text">
+            RED YIMI STUDIO — 每一條路都是回家的路 — 武漢方言系列 — 台灣文創定制 — DESIGN FOR CULTURE — RED YIMI STUDIO —
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-sub">EST. 2026</div>
+        <h1>RED YIMI<br>CULTURE</h1>
+        <div class="line"></div>
     </section>
 
-    <section class="dialect-wall">
-        <div style="text-align: center;">
-            <h2 class="wall-title">武漢方言系列 T恤</h2>
+    <h2 class="section-title">TRENDS / 潮</h2>
+    <div class="scroll-container">
+        <div class="product-card">
+            <div class="img-box">
+                <img src="tshirt_demo.png" alt="方言T">
+            </div>
+            <div class="p-name">信了你的邪</div>
+            <div>WUHAN DIALECT TEE</div>
         </div>
-        <div class="tshirt-grid">
-            <div class="dialect-card">
-                <div class="dialect-word">吧唧</div>
-                <div class="dialect-meaning">Ba Ji<br>(T-shirt 款式)</div>
+        <div class="product-card">
+            <div class="img-box">
+                <img src="bag_demo.png" alt="帆布袋">
             </div>
-            <div class="dialect-card">
-                <div class="dialect-word">蒜鳥</div>
-                <div class="dialect-meaning">Suan Wu<br>(算了/罷了)</div>
-            </div>
-            <div class="dialect-card">
-                <div class="dialect-word">虛狐</div>
-                <div class="dialect-meaning">Xu Hu<br>(裝模作樣)</div>
-            </div>
-            <div class="dialect-card">
-                <div class="dialect-word">裹鯨</div>
-                <div class="dialect-meaning">Guo Jing<br>(T-shirt 款式)</div>
-            </div>
-            <div class="dialect-card">
-                <div class="dialect-word">搞磨獅</div>
-                <div class="dialect-meaning">Gao Mo Shi<br>(做什麼/忙什麼)</div>
-            </div>
-            <div class="dialect-card">
-                <div class="dialect-word">撮蝦子</div>
-                <div class="dialect-meaning">Cuo Xia Zi<br>(吃小龍蝦)</div>
-            </div>
-            <div class="dialect-card">
-                <div class="dialect-word">尖板眼</div>
-                <div class="dialect-meaning">Jian Ban Yan<br>(稀奇古怪)</div>
-            </div>
-            <div class="dialect-card">
-                <div class="dialect-word">信了你的邪</div>
-                <div class="dialect-meaning">Xin Le Ni Di Xie<br>(服了你了)</div>
-            </div>
+            <div class="p-name">回家的路</div>
+            <div>TOTE BAG</div>
         </div>
-    </section>
+        <div class="product-card">
+            <div class="img-box">
+                <img src="fan_demo.png" alt="折扇">
+            </div>
+            <div class="p-name">嘉慶君</div>
+            <div>CLASSIC FAN</div>
+        </div>
+        <div class="product-card">
+            <div class="img-box">
+                <img src="candle_demo.png" alt="蠟燭">
+            </div>
+            <div class="p-name">文旦柚</div>
+            <div>SCENTED CANDLE</div>
+        </div>
+    </div>
 
-    <section class="story-section">
-        
-        <div class="story-item">
-            <div class="story-img-box">
-                <img src="path_to_bag_image.jpg" alt="回家的路帆布袋">
-            </div>
-            <div class="story-content">
-                <span class="story-tag">帆布袋 / 冰箱貼 / 折扇</span>
-                <h2>每一條路，都是回家的路</h2>
-                <p>將城市的經緯與鄉愁，編織進日常的隨身物件中。</p>
-                <ul class="product-list">
-                    <li>「每一條路都是回家的路」帆布袋</li>
-                    <li>「每一條路都是回家的路」冰箱貼</li>
-                    <li>「台北路的盡頭是解放大道」帆布袋</li>
-                </ul>
-            </div>
-        </div>
+    <h2 class="section-title" style="border-color: white; margin-top: 50px;">DIALECTS / 話</h2>
+    <div class="dialect-grid">
+        <div class="dialect-item"><span>吧唧</span></div>
+        <div class="dialect-item"><span>蒜鳥</span></div>
+        <div class="dialect-item"><span>虛狐</span></div>
+        <div class="dialect-item"><span>搞磨獅</span></div>
+        <div class="dialect-item"><span>尖板眼</span></div>
+        <div class="dialect-item"><span>裹鯨</span></div>
+    </div>
 
-        <div class="story-item">
-            <div class="story-img-box">
-                <img src="path_to_game_image.jpg" alt="火燒赤壁桌遊">
-            </div>
-            <div class="story-content">
-                <span class="story-tag">桌遊 / 歷史折扇</span>
-                <h2>歷史的迴響</h2>
-                <p>從三國赤壁的烽火，到嘉慶君遊台灣的傳說，在遊戲與搖扇間品味歷史。</p>
-                <ul class="product-list">
-                    <li>「火燒赤壁」桌遊紙牌</li>
-                    <li>「嘉慶君遊台灣」折扇</li>
-                    <li>「琴台遇知音」折扇</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="story-item">
-            <div class="story-img-box">
-                <img src="path_to_decor_image.jpg" alt="金蟾招財">
-            </div>
-            <div class="story-content">
-                <span class="story-tag">香氛 / 擺件 / 絲巾</span>
-                <h2>雅緻生活，招財納福</h2>
-                <p>結合傳統寓意與現代美學，點亮生活的角落。</p>
-                <ul class="product-list">
-                    <li>台灣文旦柚香薰蠟燭</li>
-                    <li>金蟾招財擺件 / 抱枕</li>
-                    <li>漢劇漢韻絲巾</li>
-                    <li>台灣光復紀念日冰箱貼</li>
-                </ul>
-            </div>
-        </div>
-
-    </section>
+    <footer>
+        <p>CONTACT US FOR CUSTOMIZATION</p>
+        <div class="big-contact">135-17234133</div>
+    </footer>
 
 </body>
 </html>
