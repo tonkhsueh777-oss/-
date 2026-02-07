@@ -3,501 +3,500 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>紅薏米 | 文化創意定制</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+    <title>HGG Animation Studio | 罕呱呱動畫工作室</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* --- 1. 設計系統 (Design System) --- */
+        /* 品牌色定義 */
         :root {
-            --bg-color: #F9F4EF; /* 溫暖米色紙張感 */
-            --primary-red: #8B3A3A; /* 殷紅 (比亮橘更沈穩，適合文創) */
-            --secondary-gold: #C0A060; /* 鎏金 */
-            --text-main: #2C2420; /* 深褐 */
-            --text-light: #5D5550;
-            --font-serif: 'Noto Serif TC', "Songti TC", serif;
-            --font-sans: "Helvetica Neue", sans-serif;
-            --card-shadow: 0 10px 25px rgba(139, 58, 58, 0.08);
+            --hgg-teal: #008080;
+            --hgg-dark: #1a1a1a;
         }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-sans);
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            line-height: 1.8;
-        }
-
-        h1, h2, h3 {
-            font-family: var(--font-serif);
-            font-weight: 700;
-            margin: 0;
-        }
-
-        /* --- 2. 導航欄 --- */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 3rem;
-            box-sizing: border-box;
-            z-index: 100;
-            background: rgba(249, 244, 239, 0.9);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        nav .logo {
-            font-size: 1.4rem;
-            color: var(--primary-red);
-            font-family: var(--font-serif);
-            letter-spacing: 2px;
-            font-weight: bold;
-        }
-
-        .nav-links span {
-            margin-left: 20px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            color: var(--text-light);
-        }
-
-        /* --- 3. Hero Section (品牌主視覺) --- */
-        .hero {
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-        }
-
-        /* 背景裝飾字 */
-        .hero-bg-text {
+        .text-teal-brand { color: var(--hgg-teal); }
+        .bg-teal-brand { background-color: var(--hgg-teal); }
+        .border-teal-brand { border-color: var(--hgg-teal); }
+        
+        /* Hero 影片樣式 */
+        .hero-video {
             position: absolute;
-            font-size: 15vw;
-            color: rgba(139, 58, 58, 0.03);
-            font-family: var(--font-serif);
-            z-index: -1;
-            user-select: none;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            color: var(--primary-red);
-            margin-bottom: 1rem;
-            letter-spacing: 10px;
-            opacity: 0;
-            animation: fadeUp 1s ease forwards 0.5s;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            letter-spacing: 3px;
-            border-top: 1px solid var(--secondary-gold);
-            border-bottom: 1px solid var(--secondary-gold);
-            padding: 10px 20px;
-            margin-top: 20px;
-            opacity: 0;
-            animation: fadeUp 1s ease forwards 0.8s;
-        }
-
-        .scroll-hint {
-            position: absolute;
-            bottom: 40px;
-            font-size: 0.8rem;
-            color: var(--primary-red);
-            animation: bounce 2s infinite;
-        }
-
-        /* --- 4. 武漢方言矩陣 (重點產品區) --- */
-        .section-padding {
-            padding: 6rem 10%;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: var(--primary-red);
-            display: inline-block;
-            position: relative;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
         }
         
-        /* 標題裝飾點 */
-        .section-header h2::before {
-            content: '';
-            display: block;
-            width: 8px;
-            height: 8px;
-            background: var(--primary-red);
-            border-radius: 50%;
-            margin: 0 auto 10px;
-        }
-
-        .dialect-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .dialect-card {
-            background: white;
-            padding: 40px 20px;
-            text-align: center;
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-        }
-
-        /* 卡片四角的裝飾線 (中式風格) */
-        .dialect-card::after {
-            content: '';
-            position: absolute;
-            top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border: 1px solid var(--primary-red);
-            opacity: 0.2;
-            transition: opacity 0.3s;
-        }
-
-        .dialect-card:hover {
-            transform: translateY(-10px);
-            background: var(--primary-red);
-        }
-
-        .dialect-card:hover::after {
-            border-color: white;
-            opacity: 0.5;
-        }
-
-        .dialect-word {
-            font-size: 2.2rem;
-            font-family: var(--font-serif);
-            font-weight: bold;
-            color: var(--primary-red);
-            margin-bottom: 10px;
-            transition: color 0.4s;
-        }
-
-        .dialect-sub {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            transition: color 0.4s;
-        }
-
-        .dialect-card:hover .dialect-word,
-        .dialect-card:hover .dialect-sub {
-            color: white;
-        }
-
-        /* --- 5. 情感敘事區 (左右交錯) --- */
-        .story-container {
-            display: flex;
-            align-items: center;
-            gap: 60px;
-            margin-bottom: 100px;
-        }
-
-        .story-container:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-
-        .story-img {
-            flex: 1;
-            position: relative;
-        }
-
-        .story-img img {
-            width: 100%;
-            display: block;
-            border-radius: 4px;
-            filter: sepia(0.1); /* 微微復古色調 */
-        }
-
-        /* 圖片背後的色塊裝飾 */
-        .story-img::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: var(--secondary-gold);
-            top: 15px;
-            left: 15px;
-            z-index: -1;
-            opacity: 0.3;
-        }
-
-        .story-text {
-            flex: 1;
-        }
-
-        .story-tag {
-            color: var(--secondary-gold);
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .story-text h3 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: var(--text-main);
-            line-height: 1.4;
-        }
-
-        .product-list {
-            margin-top: 20px;
-            padding-left: 0;
-        }
-
-        .product-list li {
-            list-style: none;
-            margin-bottom: 10px;
-            padding-left: 20px;
-            position: relative;
-            font-family: var(--font-serif);
-            color: var(--text-light);
-        }
-
-        .product-list li::before {
-            content: '•';
-            color: var(--primary-red);
-            position: absolute;
-            left: 0;
-        }
-
-        /* --- 6. 雅緻生活 (水平滑動) --- */
-        .scroll-wrapper {
-            display: flex;
-            overflow-x: auto;
-            gap: 30px;
-            padding-bottom: 40px;
-            /* 隱藏滾動條 */
-            scrollbar-width: none;
-        }
-        .scroll-wrapper::-webkit-scrollbar { display: none; }
-
-        .lifestyle-card {
-            min-width: 280px;
-            flex-shrink: 0;
-        }
-
-        .lifestyle-img {
-            height: 350px;
-            background-color: #eee;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-
-        .lifestyle-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s;
-        }
-
-        .lifestyle-card:hover img {
-            transform: scale(1.05);
-        }
-
-        .lifestyle-title {
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            text-align: center;
-        }
-
-        /* --- Footer --- */
-        footer {
-            background-color: var(--primary-red);
-            color: white;
-            padding: 4rem 10%;
-            text-align: center;
-        }
-
-        .footer-logo {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-
-        /* --- Animations --- */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        html { scroll-behavior: smooth; }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800 font-sans">
 
-    <nav>
-        <div class="logo">紅薏米 RED YIMI</div>
-        <div class="nav-links">
-            <span>方言系列</span>
-            <span>文創定制</span>
-            <span>關於我們</span>
+    <nav class="fixed w-full bg-white/95 backdrop-blur z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <img class="h-10 w-auto" src="images/logo_header.png" alt="HGG Animation Studio">
+                </div>
+                
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#works" class="text-gray-700 hover:text-teal-brand font-medium">作品</a>
+                    <a href="#services" class="text-gray-700 hover:text-teal-brand font-medium">服務</a>
+                    <a href="#pricing" class="text-gray-700 hover:text-teal-brand font-medium">報價</a>
+                    <a href="#process" class="text-gray-700 hover:text-teal-brand font-medium">流程</a>
+                    <a href="#about" class="text-gray-700 hover:text-teal-brand font-medium">關於</a>
+                    <a href="#contact" class="bg-black text-white px-5 py-2 rounded hover:bg-teal-600 transition">聯絡我們</a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-black focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <a href="#works" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">作品</a>
+            <a href="#services" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">服務</a>
+            <a href="#pricing" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">報價</a>
+            <a href="#process" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">流程</a>
+            <a href="#contact" class="block py-3 px-4 bg-gray-900 text-white text-center">聯絡我們</a>
         </div>
     </nav>
 
-    <header class="hero">
-        <div class="hero-bg-text">RED YIMI</div>
-        <h1>紅薏米</h1>
-        <p>文化 · 創意 · 定制 · 生活</p>
-        <div class="scroll-hint">SCROLL</div>
+    <header class="relative h-screen flex items-center justify-center overflow-hidden text-white">
+        <div class="absolute inset-0 bg-black">
+            <video autoplay loop muted playsinline poster="images/hero_fallback.jpg" class="hero-video opacity-60">
+                <source src="images/hero_bg.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-black/50"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto mt-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-8 leading-tight tracking-wide">
+                賦予品牌靈魂，<br>讓想像力具現化。
+            </h1>
+            <p class="text-lg md:text-2xl text-gray-200 mb-10 font-light leading-relaxed">
+                我們將企業策略轉譯為動人的影像語言。<br>
+                透過透明化的製作流程，將創意從紙上腳本完美落實為螢幕上的精彩瞬間。
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="#contact" class="bg-teal-600 hover:bg-teal-500 text-white px-8 py-3 rounded text-lg font-bold transition">聯絡我們</a>
+                <a href="#works" class="border border-white hover:bg-white hover:text-black text-white px-8 py-3 rounded text-lg font-bold transition">查看作品</a>
+            </div>
+            <div class="mt-12 flex gap-3 justify-center text-sm text-gray-300 opacity-80">
+                <span class="bg-white/20 px-4 py-1 rounded-full backdrop-blur-sm">#影視廣告</span>
+                <span class="bg-white/20 px-4 py-1 rounded-full backdrop-blur-sm">#AI專項評估</span>
+                <span class="bg-white/20 px-4 py-1 rounded-full backdrop-blur-sm">#原創IP</span>
+            </div>
+        </div>
     </header>
 
-    <section class="section-padding">
-        <div class="section-header reveal">
-            <h2>武漢方言系列</h2>
-            <p>將城市的聲音，穿在身上</p>
-        </div>
-        <div class="dialect-grid">
-            <div class="dialect-card reveal">
-                <div class="dialect-word">吧唧</div>
-                <div class="dialect-sub">BA JI</div>
+    <section class="py-16 bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div class="p-6">
+                <div class="text-4xl mb-4">🎯</div>
+                <h3 class="text-xl font-bold mb-2">需求精準轉化</h3>
+                <p class="text-gray-600">協助企業把模糊的需求，轉成可投放、有邏輯的影像內容。</p>
             </div>
-            <div class="dialect-card reveal">
-                <div class="dialect-word">蒜鳥</div>
-                <div class="dialect-sub">SUAN WU</div>
+            <div class="p-6">
+                <div class="text-4xl mb-4">🤝</div>
+                <h3 class="text-xl font-bold mb-2">單一窗口負責</h3>
+                <p class="text-gray-600">從腳本、分鏡到製作與後期，全程由 HGG 團隊一條線完成。</p>
             </div>
-            <div class="dialect-card reveal">
-                <div class="dialect-word">虛狐</div>
-                <div class="dialect-sub">XU HU</div>
-            </div>
-            <div class="dialect-card reveal">
-                <div class="dialect-word">裹鯨</div>
-                <div class="dialect-sub">GUO JING</div>
-            </div>
-            <div class="dialect-card reveal">
-                <div class="dialect-word">搞磨獅</div>
-                <div class="dialect-sub">GAO MO SHI</div>
-            </div>
-            <div class="dialect-card reveal">
-                <div class="dialect-word">撮蝦子</div>
-                <div class="dialect-sub">CUO XIA ZI</div>
-            </div>
-            <div class="dialect-card reveal">
-                <div class="dialect-word">尖板眼</div>
-                <div class="dialect-sub">JIAN BAN YAN</div>
-            </div>
-            <div class="dialect-card reveal">
-                <div class="dialect-word">信了你的邪</div>
-                <div class="dialect-sub">XIN LE NI DI XIE</div>
+            <div class="p-6">
+                <div class="text-4xl mb-4">📋</div>
+                <h3 class="text-xl font-bold mb-2">拒絕無效返工</h3>
+                <p class="text-gray-600">每個專案都有節點確認與交付清單，避免方向偏差。</p>
             </div>
         </div>
     </section>
 
-    <section class="section-padding" style="background: white;">
-        
-        <div class="story-container reveal">
-            <div class="story-img">
-                <img src="https://images.unsplash.com/photo-1597484662317-c9253e60914e?auto=format&fit=crop&w=800&q=80" alt="帆布袋情境">
+    <section id="works" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">精選作品 Works</h2>
+                <p class="text-gray-600">影視廣告 / AI 專項評估 / 原創 IP</p>
             </div>
-            <div class="story-text">
-                <span class="story-tag">CANVAS BAG COLLECTION</span>
-                <h3>每一條路<br>都是回家的路</h3>
-                <p>無論身在何處，鄉音與記憶總是指引方向。質感厚磅帆布，乘載生活重量，也乘載思念。</p>
-                <ul class="product-list">
-                    <li>「每一條路都是回家的路」帆布袋 / 冰箱貼</li>
-                    <li>「台北路的盡頭是解放大道」帆布袋</li>
-                </ul>
-            </div>
-        </div>
 
-        <div class="story-container reveal">
-            <div class="story-img">
-                <img src="https://images.unsplash.com/photo-1615893325694-8f2604856f6c?auto=format&fit=crop&w=800&q=80" alt="折扇情境">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="group relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="togglePlay(this)">
+                    <video class="w-full h-64 object-cover" loop muted playsinline poster="images/work_01.jpg">
+                        <source src="images/work_01.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4 transition-opacity duration-300 overlay-content">
+                        <svg class="w-16 h-16 text-white opacity-90 mb-3 hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                        </svg>
+                        <div>
+                            <h3 class="text-white text-xl font-bold">品牌形象廣告</h3>
+                            <p class="text-teal-400">Commercial Film</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="togglePlay(this)">
+                    <video class="w-full h-64 object-cover" loop muted playsinline poster="images/work_02.jpg">
+                        <source src="images/work_02.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4 transition-opacity duration-300 overlay-content">
+                        <svg class="w-16 h-16 text-white opacity-90 mb-3 hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                        </svg>
+                        <div>
+                            <h3 class="text-white text-xl font-bold">AI 專項評估</h3>
+                            <p class="text-teal-400">AI 網劇 / AIGC</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="togglePlay(this)">
+                    <video class="w-full h-64 object-cover" loop muted playsinline poster="images/work_03.jpg">
+                        <source src="images/work_03.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4 transition-opacity duration-300 overlay-content">
+                        <svg class="w-16 h-16 text-white opacity-90 mb-3 hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                        </svg>
+                        <div>
+                            <h3 class="text-white text-xl font-bold">產品結構演示</h3>
+                            <p class="text-teal-400">3D Animation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="togglePlay(this)">
+                    <video class="w-full h-64 object-cover" loop muted playsinline poster="images/work_04.jpg">
+                        <source src="images/work_04.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4 transition-opacity duration-300 overlay-content">
+                        <svg class="w-16 h-16 text-white opacity-90 mb-3 hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                        </svg>
+                        <div>
+                            <h3 class="text-white text-xl font-bold">品牌故事短片</h3>
+                            <p class="text-teal-400">2D Animation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="togglePlay(this)">
+                    <video class="w-full h-64 object-cover" loop muted playsinline poster="images/work_05.jpg">
+                        <source src="images/work_05.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4 transition-opacity duration-300 overlay-content">
+                        <svg class="w-16 h-16 text-white opacity-90 mb-3 hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                        </svg>
+                        <div>
+                            <h3 class="text-white text-xl font-bold">資訊解說影片</h3>
+                            <p class="text-teal-400">MG Animation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="togglePlay(this)">
+                    <video class="w-full h-64 object-cover" loop muted playsinline poster="images/work_06.jpg">
+                        <source src="images/work_06.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4 transition-opacity duration-300 overlay-content">
+                        <svg class="w-16 h-16 text-white opacity-90 mb-3 hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                        </svg>
+                        <div>
+                            <h3 class="text-white text-xl font-bold">HGG 原創 IP 動畫</h3>
+                            <p class="text-teal-400">Original IP / Character</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="story-text">
-                <span class="story-tag">CULTURE & HISTORY</span>
-                <h3>歷史的迴響<br>指尖的風雅</h3>
-                <p>展開扇面，是嘉慶君遊台灣的傳說，也是琴台遇知音的佳話。傳統工藝結合現代插畫設計。</p>
-                <ul class="product-list">
-                    <li>「嘉慶君遊台灣」折扇</li>
-                    <li>「琴台遇知音」折扇</li>
-                    <li>「火燒赤壁」桌遊紙牌</li>
-                </ul>
+            
+            <div class="text-center mt-12">
+                <a href="#contact" class="inline-block border-b-2 border-black pb-1 hover:text-teal-600 hover:border-teal-600 transition">找不到類似案例？提交需求索取方案 →</a>
             </div>
         </div>
     </section>
 
-    <section class="section-padding">
-        <div class="section-header reveal">
-            <h2>雅緻生活</h2>
-            <p>點亮日常的儀式感</p>
-        </div>
-        <div class="scroll-wrapper reveal">
-            <div class="lifestyle-card">
-                <div class="lifestyle-img">
-                    <img src="https://images.unsplash.com/photo-1602523961358-f9f03dd557db?auto=format&fit=crop&w=600&q=80" alt="香氛蠟燭">
-                </div>
-                <div class="lifestyle-title">台灣文旦柚香薰蠟燭</div>
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">服務與參考價格 Services & Pricing</h2>
+                <p class="text-gray-600">以下為常見區間 (RMB)，正式報價依腳本、鏡頭與交付規格評估。</p>
             </div>
-            <div class="lifestyle-card">
-                <div class="lifestyle-img">
-                    <img src="https://images.unsplash.com/photo-1579270634629-9e80e227083f?auto=format&fit=crop&w=600&q=80" alt="金蟾擺件">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="pricing">
+                
+                <div class="border rounded-xl p-8 hover:shadow-xl transition relative bg-gray-50">
+                    <div class="text-teal-700 font-bold mb-2">FILM</div>
+                    <h3 class="text-2xl font-bold mb-4">影視廣告</h3>
+                    <p class="text-sm text-gray-500 mb-6">適用：品牌片、產品片、發布會影像</p>
+                    <div class="text-3xl font-bold mb-6">¥30k <span class="text-sm font-normal text-gray-500">起/案</span></div>
+                    <ul class="space-y-3 text-sm text-gray-600 mb-8">
+                        <li>✅ 基礎版：¥30,000+</li>
+                        <li>⭐ 標準版：¥80,000+</li>
+                        <li>✅ 含多比例交付</li>
+                    </ul>
+                    <a href="#contact" class="block w-full text-center bg-black text-white py-2 rounded hover:bg-teal-600 transition">諮詢方案</a>
                 </div>
-                <div class="lifestyle-title">金蟾招財擺件/抱枕</div>
-            </div>
-            <div class="lifestyle-card">
-                <div class="lifestyle-img">
-                    <img src="https://images.unsplash.com/photo-1584030373081-f37b7bb4fa33?auto=format&fit=crop&w=600&q=80" alt="漢韻絲巾">
+
+                <div class="border rounded-xl p-8 hover:shadow-xl transition relative bg-gray-50">
+                    <div class="text-teal-700 font-bold mb-2">2D ANIMATION</div>
+                    <h3 class="text-2xl font-bold mb-4">2D 動畫</h3>
+                    <p class="text-sm text-gray-500 mb-6">適用：資訊解釋、流程說明、視覺包裝</p>
+                    <div class="text-3xl font-bold mb-6">¥6k <span class="text-sm font-normal text-gray-500">起/分</span></div>
+                    <ul class="space-y-3 text-sm text-gray-600 mb-8">
+                        <li>✅ MG 動畫：¥6,000+</li>
+                        <li>⭐ 逐幀動畫：¥30,000+</li>
+                        <li>✅ 風格定製開發</li>
+                    </ul>
+                    <a href="#contact" class="block w-full text-center bg-teal-600 text-white py-2 rounded hover:bg-teal-700 transition">諮詢方案</a>
                 </div>
-                <div class="lifestyle-title">漢劇漢韻絲巾</div>
-            </div>
-             <div class="lifestyle-card">
-                <div class="lifestyle-img">
-                    <img src="https://images.unsplash.com/photo-1589309736404-2e142a2acdf9?auto=format&fit=crop&w=600&q=80" alt="紀念日冰箱貼">
+
+                <div class="border rounded-xl p-8 hover:shadow-xl transition relative bg-gray-50">
+                    <div class="text-teal-700 font-bold mb-2">3D VISUAL</div>
+                    <h3 class="text-2xl font-bold mb-4">3D 演示</h3>
+                    <p class="text-sm text-gray-500 mb-6">適用：產品結構、工業流程、裝配演示</p>
+                    <div class="text-3xl font-bold mb-6">¥300 <span class="text-sm font-normal text-gray-500">起/秒</span></div>
+                    <ul class="space-y-3 text-sm text-gray-600 mb-8">
+                        <li>✅ 基礎展示：¥300+</li>
+                        <li>⭐ 標準拆解：¥800+</li>
+                        <li>✅ 高精度渲染</li>
+                    </ul>
+                    <a href="#contact" class="block w-full text-center bg-black text-white py-2 rounded hover:bg-teal-600 transition">諮詢方案</a>
                 </div>
-                <div class="lifestyle-title">台灣光復紀念日冰箱貼</div>
+
+                <div class="border-2 border-teal-600 rounded-xl p-8 hover:shadow-xl transition relative bg-white transform md:-translate-y-2">
+                    <div class="absolute top-0 right-0 bg-teal-600 text-white text-xs px-3 py-1 rounded-bl-lg">趨勢</div>
+                    <div class="text-teal-700 font-bold mb-2">AI SERVICE</div>
+                    <h3 class="text-2xl font-bold mb-4">AI 短劇製作</h3>
+                    <p class="text-sm text-gray-500 mb-6">適用：風格測試、動態分鏡、AIGC 成片</p>
+                    <div class="text-3xl font-bold mb-6">¥5k <span class="text-sm font-normal text-gray-500">起/案</span></div>
+                    <ul class="space-y-3 text-sm text-gray-600 mb-8">
+                        <li>✅ 風格樣片 (StyleFrame)</li>
+                        <li>⭐ 概念短片 (Concept)</li>
+                        <li>✅ 降本增效評估</li>
+                    </ul>
+                    <a href="#contact" class="block w-full text-center bg-teal-600 text-white py-2 rounded hover:bg-teal-700 transition">諮詢方案</a>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="footer-logo">紅薏米</div>
-        <p>銷售 / 定制 135-17234133</p>
+    <section id="process" class="py-20 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center">合作流程 Process</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 text-center">
+                <div class="relative p-4">
+                    <div class="text-4xl mb-4 font-bold text-teal-400">01</div>
+                    <h3 class="font-bold mb-2">需求確認</h3>
+                    <p class="text-xs text-gray-400">確認目標、平台與交付規格</p>
+                </div>
+                <div class="relative p-4">
+                    <div class="text-4xl mb-4 font-bold text-teal-400">02</div>
+                    <h3 class="font-bold mb-2">腳本與分鏡</h3>
+                    <p class="text-xs text-gray-400">方向鎖定 (⭐重點確認)</p>
+                </div>
+                <div class="relative p-4">
+                    <div class="text-4xl mb-4 font-bold text-teal-400">03</div>
+                    <h3 class="font-bold mb-2">製作執行</h3>
+                    <p class="text-xs text-gray-400">拍攝 / 2D / 3D / 合成</p>
+                </div>
+                <div class="relative p-4">
+                    <div class="text-4xl mb-4 font-bold text-teal-400">04</div>
+                    <h3 class="font-bold mb-2">粗剪確認</h3>
+                    <p class="text-xs text-gray-400">確認節奏與資訊正確</p>
+                </div>
+                <div class="relative p-4">
+                    <div class="text-4xl mb-4 font-bold text-teal-400">05</div>
+                    <h3 class="font-bold mb-2">修改與交付</h3>
+                    <p class="text-xs text-gray-400">按約定輪次與清單交付</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gray-800 text-white border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-teal-400 font-bold tracking-wider uppercase text-sm">Industry-Academia Collaboration</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2">HGG x 校園聯盟：AIGC 影像實驗室</h2>
+                <div class="w-24 h-1 bg-teal-500 mx-auto mt-6 rounded"></div>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="md:w-1/2">
+                    <div class="flex items-center gap-6 mb-8">
+                        <img src="images/director_photo.jpg" alt="Director Hsueh" class="w-32 h-32 rounded-full border-4 border-teal-500 shadow-lg object-cover bg-gray-700">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-1">薛導 (Director Hsueh)</h3>
+                            <p class="text-teal-400 font-medium tracking-wide">HGG 創辦人 / AIGC 計畫總監</p>
+                        </div>
+                    </div>
+
+                    <p class="text-lg text-gray-300 leading-relaxed mb-8">
+                        結合 <strong class="text-white">薛導</strong> 多年的影視實戰經驗，HGG 台灣團隊致力於推動 AIGC 技術落地。我們與學校深入合作，將真實商業專案轉化為教學實踐，縮短「學校所學」與「業界所需」的距離。
+                    </p>
+                    <p class="text-teal-400 font-bold text-xl">
+                        打造台灣最強的 AIGC 創意聚落。
+                    </p>
+                </div>
+
+                <div class="md:w-1/2 grid gap-6">
+                    <div class="bg-gray-700 p-6 rounded-lg border-l-4 border-teal-500">
+                        <h3 class="text-xl font-bold mb-2 flex items-center">
+                            🔬 技術研發 (R&D)
+                        </h3>
+                        <p class="text-gray-300 text-sm">
+                            共同開發專屬的 <span class="text-teal-300">LoRA 模型</span> 與 <span class="text-teal-300">ComfyUI</span> 自動化工作流，建立客製化影像生產線。
+                        </p>
+                    </div>
+                    <div class="bg-gray-700 p-6 rounded-lg border-l-4 border-teal-500">
+                        <h3 class="text-xl font-bold mb-2 flex items-center">
+                            🎓 人才培育
+                        </h3>
+                        <p class="text-gray-300 text-sm">
+                            讓學生直接參與 <span class="text-teal-300">商業級 AI 短劇</span> 與廣告製作，實戰中學習最前沿技術。
+                        </p>
+                    </div>
+                    <div class="bg-gray-700 p-6 rounded-lg border-l-4 border-teal-500">
+                        <h3 class="text-xl font-bold mb-2 flex items-center">
+                            ⚡ 製程革新
+                        </h3>
+                        <p class="text-gray-300 text-sm">
+                            實驗 AI 在 <span class="text-teal-300">分鏡腳本 (Animatic)</span> 與 <span class="text-teal-300">美術設定 (Concept Art)</span> 的極限應用。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2">
+                <img src="images/team_photo.jpg" alt="About HGG" class="rounded-lg shadow-lg">
+            </div>
+            <div class="md:w-1/2">
+                <h2 class="text-3xl font-bold mb-6">關於 HGG 罕呱呱</h2>
+                <h3 class="text-xl text-teal-700 font-bold mb-4">薛導領軍 · 台灣 AIGC 影像先鋒</h3>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    HGG 罕呱呱動畫工作室由 **薛導 (Director Hsueh)** 於台灣創立。面對 AIGC 技術浪潮，我們不只是一家動畫製作公司，更是影像革命的實驗場。
+                    <br><br>
+                    我們與國內頂尖院校緊密合作，建立**「AIGC 產學研發基地」**。將業界的高標準製程與學界的創新能量結合，從 AI 輔助分鏡、風格化模型訓練到全流程生成，致力於培育下一代懂得駕馭 AI 的頂尖創作者。
+                </p>
+                <img src="images/logo_header.png" class="h-8 opacity-50" alt="HGG Logo">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="bg-white p-10 md:p-16 rounded-xl shadow-lg text-center">
+                <h2 class="text-3xl font-bold mb-6">聯絡我們</h2>
+                <p class="text-gray-600 mb-12 text-lg">
+                    無論是影視廣告、2D 或 3D 動畫需求，歡迎直接聯繫我們。<br>
+                    我們將儘速回覆您的詢問並提供專業建議。
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="p-8 border border-gray-100 rounded-2xl hover:border-teal-600 hover:shadow-lg transition duration-300 group bg-gray-50 hover:bg-white">
+                        <div class="text-4xl mb-4 group-hover:scale-110 transition duration-300">📞</div>
+                        <h3 class="font-bold text-xl mb-3">電話 Phone</h3>
+                        <p class="text-gray-600 font-medium text-lg">19947603560</p>
+                    </div>
+
+                    <div class="p-8 border border-gray-100 rounded-2xl hover:border-teal-600 hover:shadow-lg transition duration-300 group bg-gray-50 hover:bg-white">
+                        <div class="text-4xl mb-4 group-hover:scale-110 transition duration-300">💬</div>
+                        <h3 class="font-bold text-xl mb-3">微信 WeChat</h3>
+                        <p class="text-gray-600 font-medium text-lg">liagaoo</p>
+                    </div>
+
+                    <div class="p-8 border border-gray-100 rounded-2xl hover:border-teal-600 hover:shadow-lg transition duration-300 group bg-gray-50 hover:bg-white">
+                        <div class="text-4xl mb-4 group-hover:scale-110 transition duration-300">✉️</div>
+                        <h3 class="font-bold text-xl mb-3">信箱 Email</h3>
+                        <a href="mailto:liagaoo@qq.com" class="text-teal-600 font-medium text-lg hover:underline break-all">
+                            liagaoo@qq.com
+                        </a>
+                    </div>
+                </div>
+
+                <div class="relative flex py-5 items-center mb-12">
+                    <div class="flex-grow border-t border-gray-200"></div>
+                    <span class="flex-shrink-0 mx-4 text-gray-400 font-bold">服務據點 Office Locations</span>
+                    <div class="flex-grow border-t border-gray-200"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-8 border border-gray-100 rounded-2xl hover:border-teal-600 hover:shadow-lg transition duration-300 bg-white group text-left">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-4xl">🇹🇼</span>
+                            <h3 class="font-bold text-xl text-black">台灣總部 Taiwan</h3>
+                        </div>
+                        <p class="text-gray-600 font-medium text-lg leading-relaxed">
+                            台北市 (請填寫您的完整地址)<br>
+                            <span class="text-sm text-gray-400">Taipei City, Taiwan</span>
+                        </p>
+                    </div>
+                    
+                    <div class="p-8 border border-gray-100 rounded-2xl hover:border-teal-600 hover:shadow-lg transition duration-300 bg-white group text-left">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-4xl">🇨🇳</span>
+                            <h3 class="font-bold text-xl text-black">武漢分部 Wuhan</h3>
+                        </div>
+                        <p class="text-gray-600 font-medium text-lg leading-relaxed">
+                            武漢市 (請填寫您的完整地址)<br>
+                            <span class="text-sm text-gray-400">Wuhan City, Hubei Province</span>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-gray-400 py-12 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <img src="images/logo_footer.png" alt="HGG Footer Logo" class="h-12 mx-auto mb-6 opacity-80">
+            <p class="mb-4 text-sm">© 2026 HGG Animation Studio | 罕呱呱動畫工作室</p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="#" class="hover:text-white">作品</a>
+                <a href="#" class="hover:text-white">服務</a>
+                <a href="#" class="hover:text-white">隱私權政策</a>
+            </div>
+        </div>
     </footer>
 
     <script>
-        // Scroll Reveal 邏輯
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1 });
+    var btn = document.getElementById('mobile-menu-btn');
+    var menu = document.getElementById('mobile-menu');
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    if(btn && menu){
+        btn.addEventListener('click', function(){
+            if(menu.className.indexOf('hidden') !== -1){
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        });
+    }
+
+    function togglePlay(div){
+        var v = div.querySelector('video');
+        var o = div.querySelector('.overlay-content');
+        if(v.paused){
+            v.play();
+            o.style.opacity = '0';
+        } else {
+            v.pause();
+            o.style.opacity = '1';
+        }
+    }
     </script>
 </body>
 </html>
