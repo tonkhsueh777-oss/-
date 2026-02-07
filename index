@@ -3,317 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文創選物店 - 手機版購物頁</title>
+    <title>好運文創選物店</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* --- CSS 樣式區：負責網頁長相 --- */
+        /* --- 1. 基礎設定 --- */
         :root {
-            --primary-color: #d35400; /* 暖橘色，呼應圖片風格 */
-            --bg-color: #fcf6ec;      /* 米黃色背景 */
-            --text-color: #333;
+            --primary: #D84315; /* 圖片中的深橘紅色 */
+            --accent: #FFECB3;  /* 溫暖的米黃色背景 */
+            --text: #3E2723;    /* 深褐色文字 */
+            --white: #ffffff;
         }
 
         body {
-            font-family: "Microsoft JhengHei", sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--accent);
+            color: var(--text);
             margin: 0;
             padding: 0;
-            padding-bottom: 80px; /* 預留底部購物車空間 */
-            color: var(--text-color);
+            padding-bottom: 100px; /* 留給底部購物車的空間 */
         }
 
-        /* 頂部 Header */
+        /* --- 2. 頂部招牌 (Hero Section) --- */
         header {
-            background-image: linear-gradient(to bottom, #e74c3c, #d35400);
-            color: white;
+            background: linear-gradient(135deg, #FF6F00, #D84315);
+            color: var(--white);
+            padding: 30px 20px;
             text-align: center;
-            padding: 20px;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+            box-shadow: 0 4px 12px rgba(216, 67, 21, 0.2);
         }
+        header h1 { margin: 0; font-size: 1.8rem; letter-spacing: 2px; }
+        header p { margin-top: 8px; opacity: 0.9; font-size: 0.9rem; }
 
-        h1 { margin: 0; font-size: 1.5rem; }
-        p { margin: 5px 0 0; opacity: 0.9; font-size: 0.9rem; }
-
-        /* 商品列表容器 */
+        /* --- 3. 商品列表 (Grid Layout) --- */
         .container {
-            padding: 15px;
-            max-width: 600px; /* 手機版寬度限制 */
+            padding: 20px;
+            max-width: 600px;
             margin: 0 auto;
         }
 
-        /* 單個商品卡片 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 手機版併排兩列 */
+            gap: 15px;
+        }
+
         .product-card {
-            background: white;
-            border-radius: 15px;
+            background: var(--white);
+            border-radius: 16px;
             overflow: hidden;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
             display: flex;
             flex-direction: column;
         }
 
-        .product-img {
+        .product-card:active { transform: scale(0.98); }
+
+        .img-placeholder {
             width: 100%;
-            height: 200px;
-            background-color: #eee; /* 圖片預設灰底 */
+            height: 150px;
+            background-color: #eee;
             object-fit: cover;
         }
 
-        .product-info {
-            padding: 15px;
+        .info {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
-        .product-title {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-
-        .product-price {
-            color: var(--primary-color);
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
+        .name { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+        .desc { font-size: 0.8rem; color: #888; margin-bottom: 8px; flex-grow: 1; }
+        .price { color: var(--primary); font-weight: 700; font-size: 1.1rem; }
 
         .add-btn {
-            background-color: var(--primary-color);
+            background-color: var(--text); /* 深色按鈕較有質感 */
             color: white;
             border: none;
-            padding: 10px;
+            padding: 8px;
             border-radius: 8px;
+            margin-top: 8px;
             width: 100%;
-            margin-top: 10px;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-        
-        .add-btn:active { background-color: #a04000; }
-
-        /* 購物車區塊 (結帳表單) */
-        #cart-section {
-            background: white;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 15px;
-            border: 2px solid var(--primary-color);
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid #eee;
-            padding: 10px 0;
-        }
-
-        .total-price {
-            text-align: right;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin: 20px 0;
-            color: var(--primary-color);
-        }
-
-        /* 表單樣式 */
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box; /* 確保 padding 不會撐開寬度 */
-        }
-
-        #submit-btn {
-            background-color: #27ae60; /* 綠色按鈕代表送出 */
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 8px;
-            width: 100%;
-            font-size: 1.2rem;
-            font-weight: bold;
             cursor: pointer;
         }
 
-        /* 浮動購物車按鈕 (提示用) */
-        .floating-cart {
+        /* --- 4. 底部浮動購物車 (Sticky Footer) --- */
+        .cart-bar {
             position: fixed;
             bottom: 20px;
+            left: 20px;
             right: 20px;
-            background: var(--primary-color);
+            background: var(--text);
             color: white;
-            padding: 15px;
-            border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            display: none; /* 有商品時才顯示 */
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 100;
+            transform: translateY(150%); /* 預設隱藏 */
+            transition: transform 0.3s ease;
+        }
+
+        .cart-bar.show { transform: translateY(0); }
+
+        .cart-info span { font-size: 0.9rem; color: #ccc; }
+        .cart-total { font-weight: 700; font-size: 1.2rem; margin-left: 5px; }
+
+        .checkout-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* --- 5. 結帳彈跳視窗 (Modal) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 20px;
+            padding: 25px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-btn {
+            position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #999;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;
+        }
+
+        .submit-order-btn {
+            width: 100%; background: #2ecc71; color: white; border: none; padding: 15px;
+            border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>好運選物店</h1>
-        <p>把好運與在地好物帶回家</p>
+        <h1>🧧 好運選物</h1>
+        <p>將在地的美好，打包回家</p>
     </header>
 
     <div class="container">
-        <div id="product-list">
+        <div class="product-grid" id="product-container">
             </div>
+    </div>
 
-        <div id="cart-section">
-            <h2>🛒 您的購物車</h2>
-            <div id="cart-items-container">
-                <p style="color: #999;">購物車目前是空的</p>
+    <div class="cart-bar" id="cart-bar">
+        <div class="cart-info">
+            <span>總金額</span>
+            <div class="cart-total">NT$ <span id="total-price">0</span></div>
+        </div>
+        <button class="checkout-btn" onclick="openModal()">去結帳 ➜</button>
+    </div>
+
+    <div class="modal" id="checkout-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 style="margin-top:0">填寫收件資料</h2>
+            <p style="font-size:0.9rem; color:#666; margin-bottom:20px;">
+                點擊送出後，將跳轉至 Google 表單確認訂單。
+            </p>
+            
+            <div class="form-group">
+                <label>您的姓名</label>
+                <input type="text" id="cust-name" placeholder="王小明">
             </div>
             
-            <div class="total-price">總金額: NT$ <span id="grand-total">0</span></div>
-
-            <hr>
-            <h3>填寫訂購資料</h3>
-            <form id="order-form" onsubmit="handleOrder(event)">
-                <div class="form-group">
-                    <label>收件人姓名</label>
-                    <input type="text" id="customer-name" required placeholder="請輸入姓名">
-                </div>
-                <div class="form-group">
-                    <label>聯絡電話</label>
-                    <input type="tel" id="customer-phone" required placeholder="09xx-xxx-xxx">
-                </div>
-                <div class="form-group">
-                    <label>收件地址 (或超商門市)</label>
-                    <textarea id="customer-address" rows="2" required placeholder="請輸入寄送資訊"></textarea>
-                </div>
-                
-                <input type="hidden" id="order-details" name="order_details">
-
-                <button type="submit" id="submit-btn">送出訂單</button>
-            </form>
+            <button class="submit-order-btn" onclick="submitOrder()">送出訂單</button>
         </div>
     </div>
 
     <script>
-        /* --- JavaScript 邏輯區 --- */
-
-        // 1. 商品資料庫 (模擬你的圖片內容)
-        // 注意：圖片 src 請換成你實際的圖片連結或相對路徑
+        // --- 資料設定 (Mock Data) ---
+        // 請將這裡的圖片連結換成你實際的圖片
         const products = [
-            { id: 1, name: "招財貓帆布袋", price: 390, img: "https://via.placeholder.com/300x200?text=Bag" },
-            { id: 2, name: "在地小農玉米 (一箱)", price: 500, img: "https://via.placeholder.com/300x200?text=Corn" },
-            { id: 3, name: "好運祈福扇", price: 150, img: "https://via.placeholder.com/300x200?text=Fan" },
-            { id: 4, name: "虎年限定抱枕", price: 450, img: "https://via.placeholder.com/300x200?text=Pillow" },
-            { id: 5, name: "文創 T-shirt", price: 680, img: "https://via.placeholder.com/300x200?text=Tshirt" },
-            { id: 6, name: "大吉大利禮盒", price: 880, img: "https://via.placeholder.com/300x200?text=GiftBox" }
+            { id: 1, name: "招財貓帆布袋", price: 390, img: "https://via.placeholder.com/300x300/E65100/fff?text=Bag" },
+            { id: 2, name: "小農甜玉米(箱)", price: 500, img: "https://via.placeholder.com/300x300/F9A825/fff?text=Corn" },
+            { id: 3, name: "好運祈福扇", price: 150, img: "https://via.placeholder.com/300x300/C62828/fff?text=Fan" },
+            { id: 4, name: "虎年大抱枕", price: 450, img: "https://via.placeholder.com/300x300/EF6C00/fff?text=Pillow" },
         ];
 
-        let cart = []; // 購物車陣列
+        let cart = [];
 
-        // 2. 初始化網頁：把商品顯示出來
-        const productListEl = document.getElementById('product-list');
-
-        function renderProducts() {
-            productListEl.innerHTML = products.map(p => `
+        // --- 1. 渲染商品 ---
+        const container = document.getElementById('product-container');
+        
+        function render() {
+            container.innerHTML = products.map(p => `
                 <div class="product-card">
-                    <img src="${p.img}" alt="${p.name}" class="product-img">
-                    <div class="product-info">
-                        <div class="product-title">${p.name}</div>
-                        <div class="product-price">NT$ ${p.price}</div>
-                        <button class="add-btn" onclick="addToCart(${p.id})">加入購物車 +</button>
+                    <img src="${p.img}" class="img-placeholder" alt="${p.name}">
+                    <div class="info">
+                        <div class="name">${p.name}</div>
+                        <div class="price">NT$ ${p.price}</div>
+                    </div>
+                    <div style="padding: 0 12px 12px;">
+                        <button class="add-btn" onclick="addToCart(${p.id})">加入購物車</button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // 3. 加入購物車功能
+        // --- 2. 購物車邏輯 ---
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             cart.push(product);
-            renderCart();
-            alert(`已將「${product.name}」加入購物車！`);
-            
-            // 自動捲動到底部 (選用)
-            // document.getElementById('cart-section').scrollIntoView({behavior: 'smooth'});
+            updateCartUI();
         }
 
-        // 4. 渲染購物車與計算總金額
-        function renderCart() {
-            const cartContainer = document.getElementById('cart-items-container');
-            const totalEl = document.getElementById('grand-total');
-
-            if (cart.length === 0) {
-                cartContainer.innerHTML = '<p style="color: #999;">購物車目前是空的</p>';
-                totalEl.innerText = '0';
-                return;
-            }
-
-            // 顯示列表
-            cartContainer.innerHTML = cart.map((item, index) => `
-                <div class="cart-item">
-                    <span>${item.name}</span>
-                    <span>NT$ ${item.price} <button onclick="removeFromCart(${index})" style="background:#ccc;border:none;border-radius:50%;cursor:pointer;">x</button></span>
-                </div>
-            `).join('');
-
-            // 計算總價
+        function updateCartUI() {
             const total = cart.reduce((sum, item) => sum + item.price, 0);
-            totalEl.innerText = total;
-        }
-
-        // 移除購物車項目
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            renderCart();
-        }
-
-        // 5. 送出訂單處理
-        function handleOrder(e) {
-            e.preventDefault(); // 阻止表單預設跳轉
-
-            if (cart.length === 0) {
-                alert('購物車是空的，無法送出喔！');
-                return;
-            }
-
-            const name = document.getElementById('customer-name').value;
-            const phone = document.getElementById('customer-phone').value;
-            const address = document.getElementById('customer-address').value;
+            document.getElementById('total-price').innerText = total;
             
-            // 整理訂單內容字串
-            let orderContent = "訂購明細：\n";
+            const bar = document.getElementById('cart-bar');
+            if (cart.length > 0) {
+                bar.classList.add('show');
+            } else {
+                bar.classList.remove('show');
+            }
+        }
+
+        // --- 3. 結帳與 Google Form 串接 ---
+        function openModal() { document.getElementById('checkout-modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('checkout-modal').style.display = 'none'; }
+
+        function submitOrder() {
+            const name = document.getElementById('cust-name').value;
+            if(!name) { alert('請填寫姓名'); return; }
+
+            // 整理購物車清單字串
+            let orderDetails = "";
             let total = 0;
             cart.forEach(item => {
-                orderContent += `- ${item.name} (NT$${item.price})\n`;
+                orderDetails += `・${item.name} ($${item.price})\n`;
                 total += item.price;
             });
-            orderContent += `\n總金額：NT$${total}`;
-            
-            // --- 這裡決定如何「寄到你這端」 ---
-            
-            // 方法 A (最簡單)：使用 mailto 喚起 Email 軟體
-            // 適合量少，或測試用
-            /*
-            const subject = `新訂單通知 - ${name}`;
-            const body = `姓名：${name}\n電話：${phone}\n地址：${address}\n\n${orderContent}`;
-            window.location.href = `mailto:your_email@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            */
+            orderDetails += `\n總金額：$${total}`;
 
-            // 方法 B (模擬)：顯示成功視窗 (實際上你需要接 Google 表單或後端 API)
-            console.log("訂單資料:", { name, phone, address, cart });
-            alert(`感謝訂購！\n\n我們會盡快將商品寄送到：\n${address}\n\n(此為靜態示範頁面，實際串接需使用表單服務)`);
+            // --- 關鍵步驟：Google Form 預填連結 ---
+            // 1. 建立一個 Google 表單，要有兩個問題：「姓名」和「訂購內容」
+            // 2. 點選表單右上角「取得預先填入的連結 (Get pre-filled link)」
+            // 3. 隨便填入假資料，按取得連結，複製該連結
+            // 4. 把連結中的 `entry.xxxxx=假資料` 換成變數
             
+            // 下面這個是範例連結，你需要換成你自己的！
+            const formID = "1FAIpQLSd...你的表單ID..."; 
+            const entryName = "entry.123456789";  // 你的「姓名」欄位 ID
+            const entryOrder = "entry.987654321"; // 你的「訂購內容」欄位 ID
+            
+            // 為了示範，我們先用 alert 顯示結果
+            // 實際使用時請把下面註解解開，並換上你的 Google Form 網址
+            
+            alert(`模擬送出！\n\n顧客：${name}\n${orderDetails}\n\n(下一步將跳轉 Google 表單)`);
+            
+            /* // 實際運作的程式碼：
+            const baseUrl = "https://docs.google.com/forms/d/e/你的表單ID/viewform";
+            const url = `${baseUrl}?${entryName}=${encodeURIComponent(name)}&${entryOrder}=${encodeURIComponent(orderDetails)}`;
+            window.location.href = url; 
+            */
+           
             // 清空購物車
             cart = [];
-            renderCart();
-            document.getElementById('order-form').reset();
+            updateCartUI();
+            closeModal();
         }
 
-        // 啟動渲染
-        renderProducts();
+        render();
     </script>
 </body>
 </html>
